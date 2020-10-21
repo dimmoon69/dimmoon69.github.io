@@ -6,3 +6,4 @@
 * ###### [Преобразование примитивных типов.](https://dimmoon69.github.io/java_script/3/)
 * ###### [Объекты.](https://dimmoon69.github.io/java_script/4/)
 2. #### Условные конструкции (Условия и Switch)
+* ###### [Условные операторы.](https://dimmoon69.github.io/java_script/4/)
