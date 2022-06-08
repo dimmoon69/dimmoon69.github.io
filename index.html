@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="theme-color" content="black" />
+        <link rel="manifest" href="manifest.json" />
+        <link rel="icon" href="img/icon-192.png" sizes="192x192" />
+        <link rel="icon" href="img/icon-256.png" sizes="256x256" />
+        <link rel="icon" href="img/icon-512.png" sizes="512x512" />
+        <link rel="stylesheet" href="css/style.css" />
+        <title>PWA-game</title>
+    </head>
+    <body>
+        <!-- Модальное окно -->
+        <div id="myModal" class="modal">
+            <!-- Контент в модальном контенте -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Добавить на домашний экран?</p>
+                <button onclick="offlinePrompt()">Установить</button>
+            </div>
+        </div>
+        <script>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                    navigator.serviceWorker.register('/sw.js', {scope: '/'}).then(function(registration) {
+                        console.log('ServiceWorker зарегистрирован с областью видимости в пределах: ', registration.scope);
+                    }, function(err) {
+                        console.log('Регистрация ServiceWorker не удалась: ', err);
+                    });
+                });
+            }
+        
+            let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', function (e) {
+                console.log('срабатывание собятия beforeinstallprompt');
+                e.preventDefault();
+                deferredPrompt = e;
+                modal.style.display = 'block';
+            });
+            // Получаем модальное окно
+            var modal = document.getElementById('myModal');
+            // Получаем элемент <span> закрывающее модальное окно
+            var span = document.getElementsByClassName('close')[0];
+            // Если пользователь щелкает за пределами модального окна - оно закрывается
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+            // Если пользователь щелкает <span> (x), модальное окно закрывается
+            span.onclick = function() {
+                modal.style.display = 'none';
+            }
+            function offlinePrompt() {
+                deferredPrompt.prompt();
+            }
+        </script>
+  
+        <script src="js/game.js"></script>
+    </body>
+</html>
